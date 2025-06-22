@@ -47,6 +47,20 @@ export function LoginForm({
     }
   };
 
+  const handleGithubLogin = async () => {
+    const supabase = createClient();
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        // must match a URL you’ve whitelisted in the Supabase Dashboard
+        redirectTo: window.location.origin + '/auth/callback?next=/protected'
+      }
+    })
+    if (error) {
+      console.error('Error signing in with GitHub:', error)
+    }
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -91,6 +105,14 @@ export function LoginForm({
               {error && <p className="text-sm text-red-500">{error}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Logging in..." : "Login"}
+              </Button>
+              <Button
+                type="button"
+                className="w-full"
+                disabled={isLoading}
+                onClick={handleGithubLogin}
+              >
+                {isLoading ? "Logging in..." : "Login with Github"}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">

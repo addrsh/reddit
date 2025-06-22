@@ -16,6 +16,7 @@ import {
   TrendingUp,
   MessageSquare
 } from 'lucide-react';
+import Link from "next/link";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -48,10 +49,16 @@ const Navigation = () => {
             <a href="#features" className="text-zinc-400 hover:text-white transition-colors duration-300 font-medium">Features</a>
             <a href="#pricing" className="text-zinc-400 hover:text-white transition-colors duration-300 font-medium">Pricing</a>
             <a href="#about" className="text-zinc-400 hover:text-white transition-colors duration-300 font-medium">About</a>
-            <button className="text-zinc-400 hover:text-white transition-colors duration-300 font-medium">Sign In</button>
-            <button className="bg-gradient-to-r from-orange-500 to-amber-500 text-black px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-orange-500/25 transition-all duration-300 font-semibold">
-              Get Started
-            </button>
+            <Link href="/auth/login">
+              <button className="text-zinc-400 hover:text-white transition-colors duration-300 font-medium">
+                Sign In
+              </button>
+            </Link>
+            <Link href="/auth/sign-up">
+              <button className="bg-gradient-to-r from-orange-500 to-amber-500 text-black px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-orange-500/25 transition-all duration-300 font-semibold">
+                Get Started
+              </button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
