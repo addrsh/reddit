@@ -39,7 +39,7 @@ export function LoginForm({
       });
       if (error) throw error;
       // Update this route to redirect to an authenticated route. The user already has an active session.
-      router.push("/protected");
+      router.push("/dashboard");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
@@ -53,7 +53,7 @@ export function LoginForm({
       provider: 'github',
       options: {
         // must match a URL you’ve whitelisted in the Supabase Dashboard
-        redirectTo: window.location.origin + '/auth/callback?next=/protected'
+        redirectTo: window.location.origin + '/auth/callback?next=/dashboard'
       }
     })
     if (error) {
