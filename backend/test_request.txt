@@ -1,0 +1,5 @@
+curl -G "http://127.0.0.1:8000/api/v1/posts" \
+  --data-urlencode "subreddit=cybersecurity" \
+  --data-urlencode "limit=10" \
+  --data-urlencode "company_description=Acme%20Corp%20is%20a%20leading%20provider%20of%20data%20security%20solutions%20protecting%20organizations%20from%20cyber%20threats" \
+  -H "Accept: application/json"
