@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from app.api.v1.api import api_router
 from app.core.config import settings
 from app.services.reddit_service import RedditService
+from app.services.supabase_service import SupabaseService
 
 # Load environment variables
 load_dotenv()
@@ -18,6 +19,7 @@ async def lifespan(app: FastAPI):
     """Handle startup and shutdown events."""
     # Startup: Initialize services
     app.state.reddit_service = RedditService()
+    app.state.supabase = SupabaseService()
     
     # Start the background task to fetch posts
     # await app.state.reddit_service.start_fetching()

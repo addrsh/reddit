@@ -10,13 +10,21 @@ class SupabaseService:
         self.supabase: Client = create_client(URL, KEY)
 
     def add_subscription(self, user_id: str, subreddit: str):
-        res = self.supabase.table("user_subscriptions") \
-            .insert({
-                "user_id": user_id,
-                "subreddit": subreddit,
-                # last_fetched will default to NOW()
-            }).execute()
-        return res.data, res.error
+        try:
+            # Insert the subscription (Supabase will handle the duplicate check with unique constraint)
+            res = self.supabase.table("user_subscriptions") \
+                .upsert({
+                    "user_id": user_id,
+                    "subreddit": subreddit,
+                    # last_fetched will default to NOW()
+                }, on_conflict='user_id,subreddit').execute()
+            
+            # Return the data and None for error if successful
+            return res.data
+            
+        except Exception as e:
+            print(f"Error in add_subscription: {str(e)}")
+            return str(e)
 
     def delete_subscription(self, user_id: str, subreddit: str):
         res = self.supabase.table("user_subscriptions") \
@@ -24,15 +32,16 @@ class SupabaseService:
             .eq("user_id", user_id) \
             .eq("subreddit", subreddit) \
             .execute()
-        return res.data, res.error
+        return res.data
 
     def list_subscriptions(self, user_id: str):
         res = self.supabase.table("user_subscriptions") \
-            .select("subreddit, last_fetched") \
+            .select("*") \
             .eq("user_id", user_id) \
             .order("subreddit") \
             .execute()
-        return res.data, res.error
+
+        return res.data
 
     def update_last_fetched(self, user_id: str, subreddit: str):
         res = self.supabase.table("user_subscriptions") \
@@ -40,4 +49,4 @@ class SupabaseService:
             .eq("user_id", user_id) \
             .eq("subreddit", subreddit) \
             .execute()
-        return res.data, res.error
+        return res.data
