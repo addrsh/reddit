@@ -5,11 +5,13 @@ from datetime import datetime
 from app.services.reddit_service import RedditService
 from fastapi import Request
 from .endpoints import subscriptions
+from .endpoints import company_info
 
 api_router = APIRouter()
 
 # Include all endpoint routers
 api_router.include_router(subscriptions.router, prefix="/subscriptions", tags=["subscriptions"])
+api_router.include_router(company_info.router, prefix="/company-info", tags=["company-info"])
 
 def get_reddit_service(request: Request) -> RedditService:
     """Dependency to get the Reddit service instance."""

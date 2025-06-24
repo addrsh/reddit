@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { InfoIcon } from "lucide-react";
 import { SubscriptionForm } from "./subscription-form";
 import { SubscriptionList } from "./subscription-list";
+import { CompanyInfoForm } from "./company-info-form";
 import DashboardNavigation from "@/components/layout/DashboardNavigation";
 
 export default async function ProtectedPage() {
@@ -17,7 +18,11 @@ export default async function ProtectedPage() {
     <div className="flex-1 w-full flex flex-col gap-8 p-4 md:p-8">
       <DashboardNavigation />
       
-      <div className="space-y-6">
+      <div className="space-y-8">
+        <div className="bg-card p-6 rounded-lg border">
+          <CompanyInfoForm />
+        </div>
+        
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Your Subscriptions</h1>
           <p className="text-muted-foreground">
