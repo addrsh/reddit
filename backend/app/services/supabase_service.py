@@ -1,7 +1,7 @@
 import os
 from supabase import create_client, Client
 from datetime import datetime
-from magentic import prompt
+from magentic import prompt_chain, OpenAIChatModel
 from bs4 import BeautifulSoup
 import requests
 
@@ -23,14 +23,7 @@ def _scrape_company_info_from_url(company_url: str) -> str:
         try:            
             response = requests.get(company_url)
             soup = BeautifulSoup(response.text, 'html.parser')
-            
-            # Find the company information on the page
-            # This is a very basic scraper and may not work for all websites
-            company_info_p = soup.find('p', {'class': 'company-info'})
-            if not company_info_p:
-                return ""
-            
-            return company_info_p.text.strip()
+            return soup.get_text().strip()
         
         except Exception as e:
             print(f"Error in scrape_company_info_from_url: {str(e)}")
@@ -134,7 +127,7 @@ class SupabaseService:
             return res.data[0]
             
         except Exception as e:
-            print(f"Error in update_company_info: {str(e)}")
+            print(f"Error in upsert_company_info: {str(e)}")
             raise e
 
     def get_company_info(self, user_id: str):

@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 export async function POST(request: Request) {
   try {
     console.log('Received subscription request');
@@ -30,7 +32,7 @@ export async function POST(request: Request) {
     }
     
     // Forward the request to the backend service
-    const backendUrl = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/subscriptions/`;
+    const backendUrl = `${BASE_URL}/api/v1/subscriptions/`;
     console.log('Forwarding to backend:', backendUrl);
     
     const payload = {
@@ -103,7 +105,7 @@ export async function GET(request: Request) {
     }
     
     // Forward the request to the backend service
-    const backendUrl = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/subscriptions/${userId}`;
+    const backendUrl = `${BASE_URL}/api/v1/subscriptions/${userId}`;
     const response = await fetch(backendUrl, {
       headers: {
         'Content-Type': 'application/json',
@@ -153,7 +155,7 @@ export async function DELETE(
     }
     
     // Forward the request to the backend service
-    const backendUrl = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/subscriptions/${id}/${user.id}`;
+    const backendUrl = `${BASE_URL}/api/v1/subscriptions/${id}/${user.id}`;
     const response = await fetch(backendUrl, {
       method: 'DELETE',
       headers: {
